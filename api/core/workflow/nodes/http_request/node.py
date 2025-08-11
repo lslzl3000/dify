@@ -8,8 +8,8 @@ from core.file import File, FileTransferMethod
 from core.tools.tool_file_manager import ToolFileManager
 from core.variables.segments import ArrayFileSegment
 from core.workflow.enums import ErrorStrategy, NodeType, WorkflowNodeExecutionStatus
-from core.workflow.events import NodeRunResult
 from core.workflow.graph import BaseNodeData, Node, RetryConfig
+from core.workflow.node_events import NodeRunResult
 from core.workflow.nodes.base import variable_template_parser
 from core.workflow.nodes.base.entities import VariableSelector
 from core.workflow.nodes.http_request.executor import Executor

@@ -16,17 +16,19 @@ from core.workflow.enums import (
 from core.workflow.events import (
     GraphNodeEventBase,
     GraphRunFailedEvent,
+    NodeRunSucceededEvent,
+)
+from core.workflow.graph import BaseNodeData, Graph, Node, RetryConfig
+from core.workflow.node_events import (
     LoopFailedEvent,
     LoopNextEvent,
     LoopStartedEvent,
     LoopSucceededEvent,
     NodeEventBase,
     NodeRunResult,
-    NodeRunSucceededEvent,
     StreamCompletedEvent,
 )
-from core.workflow.graph import BaseNodeData, Graph, Node, RetryConfig
-from core.workflow.nodes.loop.entities import LoopNodeData
+from core.workflow.nodes.loop.entities import LoopNodeData, LoopVariableData
 from core.workflow.utils.condition.entities import Condition
 from core.workflow.utils.condition.processor import ConditionProcessor
 from factories.variable_factory import TypeMismatchError, build_segment_with_type, segment_to_variable
@@ -89,18 +91,17 @@ class LoopNode(Node):
         # Initialize loop variables in the original variable pool
         loop_variable_selectors = {}
         if self._node_data.loop_variables:
+            value_processor: dict[Literal["constant", "variable"], Callable[[LoopVariableData], Segment | None]] = {
+                "constant": lambda var: self._get_segment_for_constant(var.var_type, var.value),
+                "variable": lambda var: self.graph_runtime_state.variable_pool.get(var.value),
+            }
             for loop_variable in self._node_data.loop_variables:
-                value_processor: dict[Literal["constant", "variable"], Callable[[], Segment | None]] = {
-                    "constant": lambda var=loop_variable: self._get_segment_for_constant(var.var_type, var.value),
-                    "variable": lambda var=loop_variable: self.graph_runtime_state.variable_pool.get(var.value),
-                }
-
                 if loop_variable.value_type not in value_processor:
                     raise ValueError(
                         f"Invalid value type '{loop_variable.value_type}' for loop variable {loop_variable.label}"
                     )
 
-                processed_segment = value_processor[loop_variable.value_type]()
+                processed_segment = value_processor[loop_variable.value_type](loop_variable)
                 if not processed_segment:
                     raise ValueError(f"Invalid value for loop variable {loop_variable.label}")
                 variable_selector = [self._node_id, loop_variable.label]

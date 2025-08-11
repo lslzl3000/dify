@@ -5,8 +5,8 @@ from typing_extensions import deprecated
 
 from core.workflow.entities import VariablePool
 from core.workflow.enums import ErrorStrategy, NodeExecutionType, NodeType, WorkflowNodeExecutionStatus
-from core.workflow.events import NodeRunResult
 from core.workflow.graph import BaseNodeData, Node, RetryConfig
+from core.workflow.node_events import NodeRunResult
 from core.workflow.nodes.if_else.entities import IfElseNodeData
 from core.workflow.utils.condition.entities import Condition
 from core.workflow.utils.condition.processor import ConditionProcessor

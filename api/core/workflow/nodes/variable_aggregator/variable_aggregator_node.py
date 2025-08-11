@@ -3,8 +3,8 @@ from typing import Any, Optional
 
 from core.variables.segments import Segment
 from core.workflow.enums import ErrorStrategy, NodeType, WorkflowNodeExecutionStatus
-from core.workflow.events import NodeRunResult
 from core.workflow.graph import BaseNodeData, Node, RetryConfig
+from core.workflow.node_events import NodeRunResult
 from core.workflow.nodes.variable_aggregator.entities import VariableAssignerNodeData
 
 

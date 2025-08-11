@@ -4,7 +4,6 @@ from pydantic import BaseModel, Field
 
 from core.model_runtime.entities.llm_entities import LLMUsage
 
-from .runtime_route_state import RuntimeRouteState
 from .variable_pool import VariablePool
 
 
@@ -27,6 +26,3 @@ class GraphRuntimeState(BaseModel):
 
     node_run_steps: int = 0
     """node run steps"""
-
-    node_run_state: RuntimeRouteState = RuntimeRouteState()
-    """node run state"""

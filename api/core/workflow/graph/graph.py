@@ -1,17 +1,33 @@
 import logging
 from collections import defaultdict
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, Optional, cast
+from typing import Any, Optional, Protocol, cast
 
 from core.workflow.enums import NodeType
 
 from .edge import Edge
 from .node import Node
 
-if TYPE_CHECKING:
-    from core.workflow.nodes.node_factory import NodeFactory
-
 logger = logging.getLogger(__name__)
+
+
+class NodeFactory(Protocol):
+    """
+    Protocol for creating Node instances from node data dictionaries.
+
+    This protocol decouples the Graph class from specific node mapping implementations,
+    allowing for different node creation strategies while maintaining type safety.
+    """
+
+    def create_node(self, node_config: dict[str, Any]) -> Node:
+        """
+        Create a Node instance from node configuration data.
+
+        :param node_config: node configuration dictionary containing type and other data
+        :return: initialized Node instance
+        :raises ValueError: if node type is unknown or configuration is invalid
+        """
+        ...
 
 
 class Graph:

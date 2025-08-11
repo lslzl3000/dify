@@ -4,23 +4,23 @@ from typing import Any, Optional
 
 from pydantic import Field
 
-from .base import GraphNodeEventBase
+from .base import NodeEventBase
 
 
-class NodeRunLoopStartedEvent(GraphNodeEventBase):
+class LoopStartedEvent(NodeEventBase):
     start_at: datetime = Field(..., description="start at")
     inputs: Optional[Mapping[str, Any]] = None
     metadata: Optional[Mapping[str, Any]] = None
     predecessor_node_id: Optional[str] = None
 
 
-class NodeRunLoopNextEvent(GraphNodeEventBase):
+class LoopNextEvent(NodeEventBase):
     index: int = Field(..., description="index")
     pre_loop_output: Optional[Any] = None
     duration: Optional[float] = None
 
 
-class NodeRunLoopSucceededEvent(GraphNodeEventBase):
+class LoopSucceededEvent(NodeEventBase):
     start_at: datetime = Field(..., description="start at")
     inputs: Optional[Mapping[str, Any]] = None
     outputs: Optional[Mapping[str, Any]] = None
@@ -29,15 +29,10 @@ class NodeRunLoopSucceededEvent(GraphNodeEventBase):
     loop_duration_map: Optional[dict[str, float]] = None
 
 
-class NodeRunLoopFailedEvent(GraphNodeEventBase):
+class LoopFailedEvent(NodeEventBase):
     start_at: datetime = Field(..., description="start at")
     inputs: Optional[Mapping[str, Any]] = None
     outputs: Optional[Mapping[str, Any]] = None
     metadata: Optional[Mapping[str, Any]] = None
     steps: int = 0
     error: str = Field(..., description="failed reason")
-
-
-class NodeInLoopFailedEvent(GraphNodeEventBase):
-    error: str = Field(..., description="error")
-    start_at: datetime = Field(..., description="node start time")

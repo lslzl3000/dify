@@ -1,7 +1,7 @@
-from typing import TYPE_CHECKING, Any, Protocol
+from typing import TYPE_CHECKING, Any
 
 from core.workflow.enums import ErrorStrategy, NodeExecutionType, NodeType
-from core.workflow.graph import Node
+from core.workflow.graph import Node, NodeFactory
 
 from .node_mapping import LATEST_VERSION, NODE_TYPE_CLASSES_MAPPING
 
@@ -9,26 +9,7 @@ if TYPE_CHECKING:
     from core.workflow.entities import GraphInitParams, GraphRuntimeState
 
 
-class NodeFactory(Protocol):
-    """
-    Protocol for creating Node instances from node data dictionaries.
-
-    This protocol decouples the Graph class from specific node mapping implementations,
-    allowing for different node creation strategies while maintaining type safety.
-    """
-
-    def create_node(self, node_config: dict[str, Any]) -> Node:
-        """
-        Create a Node instance from node configuration data.
-
-        :param node_config: node configuration dictionary containing type and other data
-        :return: initialized Node instance
-        :raises ValueError: if node type is unknown or configuration is invalid
-        """
-        ...
-
-
-class DifyNodeFactory:
+class DifyNodeFactory(NodeFactory):
     """
     Default implementation of NodeFactory that uses the traditional node mapping.
 

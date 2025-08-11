@@ -26,8 +26,8 @@ from core.helper import ssrf_proxy
 from core.variables import ArrayFileSegment
 from core.variables.segments import ArrayStringSegment, FileSegment
 from core.workflow.enums import ErrorStrategy, NodeType, WorkflowNodeExecutionStatus
-from core.workflow.events import NodeRunResult
 from core.workflow.graph import BaseNodeData, Node, RetryConfig
+from core.workflow.node_events import NodeRunResult
 
 from .entities import DocumentExtractorNodeData
 from .exc import DocumentExtractorError, FileDownloadError, TextExtractionError, UnsupportedFileTypeError

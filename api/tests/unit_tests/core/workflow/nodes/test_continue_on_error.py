@@ -13,12 +13,12 @@ from core.workflow.events import (
     GraphRunPartialSucceededEvent,
     NodeRunExceptionEvent,
     NodeRunFailedEvent,
-    NodeRunResult,
     NodeRunStreamChunkEvent,
 )
-from core.workflow.events.node import NodeRunStreamChunkEvent, StreamCompletedEvent
+from core.workflow.events.node import NodeRunStreamChunkEvent
 from core.workflow.graph import Graph
 from core.workflow.graph_engine import GraphEngine
+from core.workflow.node_events.node import NodeRunResult, StreamCompletedEvent
 from core.workflow.nodes.llm.node import LLMNode
 from core.workflow.nodes.node_factory import DifyNodeFactory
 from core.workflow.system_variable import SystemVariable

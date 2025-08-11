@@ -12,7 +12,7 @@ from core.variables.segments import ArrayStringSegment
 from core.variables.variables import StringVariable
 from core.workflow.entities import GraphInitParams
 from core.workflow.enums import NodeType, WorkflowNodeExecutionStatus
-from core.workflow.events import NodeRunResult
+from core.workflow.node_events import NodeRunResult
 from core.workflow.nodes.document_extractor import DocumentExtractorNode, DocumentExtractorNodeData
 from core.workflow.nodes.document_extractor.node import (
     _extract_text_from_docx,

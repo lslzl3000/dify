@@ -18,8 +18,9 @@ from core.variables.variables import VariableUnion
 from core.workflow.entities import VariablePool, WorkflowNodeExecution
 from core.workflow.enums import ErrorStrategy, WorkflowNodeExecutionStatus
 from core.workflow.errors import WorkflowNodeRunFailedError
-from core.workflow.events import GraphNodeEventBase, NodeRunResult, StreamCompletedEvent
+from core.workflow.events import GraphNodeEventBase
 from core.workflow.graph import Node
+from core.workflow.node_events import NodeRunResult, StreamCompletedEvent
 from core.workflow.nodes import NodeType
 from core.workflow.nodes.node_mapping import LATEST_VERSION, NODE_TYPE_CLASSES_MAPPING
 from core.workflow.nodes.start.entities import StartNodeData

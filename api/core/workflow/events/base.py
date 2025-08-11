@@ -1,32 +1,9 @@
-from collections.abc import Mapping
-from typing import Any, Optional
+from typing import Optional
 
 from pydantic import BaseModel, Field
 
-from core.model_runtime.entities.llm_entities import LLMUsage
-from core.workflow.enums import NodeType, WorkflowNodeExecutionMetadataKey, WorkflowNodeExecutionStatus
-
-
-class NodeRunResult(BaseModel):
-    """
-    Node Run Result.
-    """
-
-    status: WorkflowNodeExecutionStatus = WorkflowNodeExecutionStatus.PENDING
-
-    inputs: Mapping[str, Any] = Field(default_factory=dict)
-    process_data: Mapping[str, Any] = Field(default_factory=dict)
-    outputs: Mapping[str, Any] = Field(default_factory=dict)
-    metadata: Mapping[WorkflowNodeExecutionMetadataKey, Any] = Field(default_factory=dict)
-    llm_usage: LLMUsage = Field(default_factory=LLMUsage.empty_usage)
-
-    edge_source_handle: str = "source"  # source handle id of node with multiple branches
-
-    error: str = ""
-    error_type: str = ""
-
-    # single step node run retry
-    retry_index: int = 0
+from core.workflow.enums import NodeType
+from core.workflow.node_events import NodeRunResult
 
 
 class GraphEngineEvent(BaseModel):
@@ -73,10 +50,4 @@ class BaseIterationEvent(GraphNodeEventBase):
 
 
 class GraphAgentNodeEventBase(GraphNodeEventBase):
-    pass
-
-
-class NodeEventBase(GraphEngineEvent):
-    """Base class for all node events"""
-
     pass

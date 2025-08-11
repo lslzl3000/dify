@@ -17,14 +17,13 @@ from core.workflow.entities import GraphInitParams, GraphRuntimeState, VariableP
 from core.workflow.enums import NodeType, WorkflowNodeExecutionStatus
 from core.workflow.events import (
     GraphRunSucceededEvent,
-    NodeRunResult,
     NodeRunStartedEvent,
     NodeRunStreamChunkEvent,
     NodeRunSucceededEvent,
-    StreamCompletedEvent,
 )
 from core.workflow.graph import Graph
 from core.workflow.graph_engine import GraphEngine
+from core.workflow.node_events import NodeRunResult, StreamCompletedEvent
 from core.workflow.nodes.llm.node import LLMNode
 from core.workflow.nodes.node_factory import DifyNodeFactory
 from core.workflow.system_variable import SystemVariable

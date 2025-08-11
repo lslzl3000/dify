@@ -29,13 +29,13 @@ from core.workflow.events import (
     GraphRunSucceededEvent,
     NodeRunExceptionEvent,
     NodeRunFailedEvent,
-    NodeRunResult,
     NodeRunRetryEvent,
     NodeRunStartedEvent,
     NodeRunStreamChunkEvent,
     NodeRunSucceededEvent,
 )
 from core.workflow.graph import Edge, Graph
+from core.workflow.node_events import NodeRunResult
 from models.enums import UserFrom
 
 from .executing_nodes_manager import ExecutingNodesManager

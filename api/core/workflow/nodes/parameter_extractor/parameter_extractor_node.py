@@ -28,8 +28,8 @@ from core.prompt.utils.prompt_message_util import PromptMessageUtil
 from core.variables.types import SegmentType
 from core.workflow.entities import VariablePool
 from core.workflow.enums import ErrorStrategy, NodeType, WorkflowNodeExecutionMetadataKey, WorkflowNodeExecutionStatus
-from core.workflow.events import NodeRunResult
 from core.workflow.graph import BaseNodeData, Node, RetryConfig
+from core.workflow.node_events import NodeRunResult
 from core.workflow.nodes.base import variable_template_parser
 from core.workflow.nodes.llm import ModelConfig, llm_utils
 from factories.variable_factory import build_segment_with_type

@@ -58,15 +58,15 @@ from core.workflow.enums import (
     WorkflowNodeExecutionMetadataKey,
     WorkflowNodeExecutionStatus,
 )
-from core.workflow.events import (
-    GraphEngineEvent,
+from core.workflow.graph import BaseNodeData, Node, RetryConfig
+from core.workflow.node_events import (
     ModelInvokeCompletedEvent,
+    NodeEventBase,
     NodeRunResult,
     RunRetrieverResourceEvent,
     StreamChunkEvent,
     StreamCompletedEvent,
 )
-from core.workflow.graph import BaseNodeData, Node, RetryConfig
 from core.workflow.nodes.base.entities import VariableSelector
 from core.workflow.nodes.base.variable_template_parser import VariableTemplateParser
 
@@ -347,7 +347,7 @@ class LLMNode(Node):
         file_outputs: list["File"],
         node_id: str,
         node_type: NodeType,
-    ) -> Generator[GraphEngineEvent | LLMStructuredOutput, None, None]:
+    ) -> Generator[NodeEventBase | LLMStructuredOutput, None, None]:
         model_schema = model_instance.model_type_instance.get_model_schema(
             node_data_model.name, model_instance.credentials
         )
@@ -394,7 +394,7 @@ class LLMNode(Node):
         file_outputs: list["File"],
         node_id: str,
         node_type: NodeType,
-    ) -> Generator[GraphEngineEvent | LLMStructuredOutput, None, None]:
+    ) -> Generator[NodeEventBase | LLMStructuredOutput, None, None]:
         # For blocking mode
         if isinstance(invoke_result, LLMResult):
             event = LLMNode.handle_blocking_result(

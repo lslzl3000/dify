@@ -99,6 +99,7 @@ class WorkflowEntry:
                     for callback in callbacks:
                         callback.on_event(event=event)
                 yield event
+                print(f"=====DEBUG: {event!r}")
         except GenerateTaskStoppedError:
             pass
         except Exception as e:

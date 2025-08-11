@@ -34,8 +34,8 @@ from core.variables import (
 from core.variables.segments import ArrayObjectSegment
 from core.workflow.entities import GraphInitParams
 from core.workflow.enums import ErrorStrategy, NodeType, WorkflowNodeExecutionStatus
-from core.workflow.events import ModelInvokeCompletedEvent, NodeRunResult
 from core.workflow.graph import BaseNodeData, Node, RetryConfig
+from core.workflow.node_events import ModelInvokeCompletedEvent, NodeRunResult
 from core.workflow.nodes.knowledge_retrieval.template_prompts import (
     METADATA_FILTER_ASSISTANT_PROMPT_1,
     METADATA_FILTER_ASSISTANT_PROMPT_2,

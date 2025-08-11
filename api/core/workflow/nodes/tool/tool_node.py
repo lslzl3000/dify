@@ -21,8 +21,8 @@ from core.workflow.enums import (
     WorkflowNodeExecutionMetadataKey,
     WorkflowNodeExecutionStatus,
 )
-from core.workflow.events import NodeRunResult, StreamChunkEvent, StreamCompletedEvent
 from core.workflow.graph import BaseNodeData, Node, RetryConfig
+from core.workflow.node_events import NodeRunResult, StreamChunkEvent, StreamCompletedEvent
 from core.workflow.nodes.base.variable_template_parser import VariableTemplateParser
 from extensions.ext_database import db
 from factories import file_factory

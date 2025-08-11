@@ -3,7 +3,7 @@ from unittest.mock import patch
 import pytest
 
 from core.workflow.enums import WorkflowNodeExecutionStatus
-from core.workflow.events import NodeRunResult
+from core.workflow.node_events import NodeRunResult
 from core.workflow.nodes.template_transform.template_transform_node import TemplateTransformNode
 
 from .test_graph_engine import TableTestRunner, WorkflowTestCase

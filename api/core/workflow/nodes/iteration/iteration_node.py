@@ -17,6 +17,9 @@ from core.workflow.events import (
     GraphNodeEventBase,
     GraphRunFailedEvent,
     GraphRunSucceededEvent,
+)
+from core.workflow.graph import BaseNodeData, Graph, Node, RetryConfig
+from core.workflow.node_events import (
     IterationFailedEvent,
     IterationNextEvent,
     IterationStartedEvent,
@@ -24,7 +27,6 @@ from core.workflow.events import (
     NodeRunResult,
     StreamCompletedEvent,
 )
-from core.workflow.graph import BaseNodeData, Graph, Node, RetryConfig
 from core.workflow.nodes.iteration.entities import ErrorHandleMode, IterationNodeData
 from libs.datetime_utils import naive_utc_now
 
@@ -150,25 +152,26 @@ class IterationNode(Node):
                 # Update the total tokens from this iteration
                 self.graph_runtime_state.total_tokens += graph_engine.graph_runtime_state.total_tokens
                 iter_run_map[str(index)] = (datetime.now(UTC).replace(tzinfo=None) - iter_start_at).total_seconds()
-                yield IterationSucceededEvent(
-                    start_at=started_at,
-                    inputs=inputs,
-                    outputs={"output": outputs},
-                    steps=len(iterator_list_value),
-                    metadata={WorkflowNodeExecutionMetadataKey.TOTAL_TOKENS: self.graph_runtime_state.total_tokens},
-                )
 
-                # Yield final success event
-                yield StreamCompletedEvent(
-                    node_run_result=NodeRunResult(
-                        status=WorkflowNodeExecutionStatus.SUCCEEDED,
-                        outputs={"output": outputs},
-                        metadata={
-                            WorkflowNodeExecutionMetadataKey.ITERATION_DURATION_MAP: iter_run_map,
-                            WorkflowNodeExecutionMetadataKey.TOTAL_TOKENS: self.graph_runtime_state.total_tokens,
-                        },
-                    )
+            yield IterationSucceededEvent(
+                start_at=started_at,
+                inputs=inputs,
+                outputs={"output": outputs},
+                steps=len(iterator_list_value),
+                metadata={WorkflowNodeExecutionMetadataKey.TOTAL_TOKENS: self.graph_runtime_state.total_tokens},
+            )
+
+            # Yield final success event
+            yield StreamCompletedEvent(
+                node_run_result=NodeRunResult(
+                    status=WorkflowNodeExecutionStatus.SUCCEEDED,
+                    outputs={"output": outputs},
+                    metadata={
+                        WorkflowNodeExecutionMetadataKey.ITERATION_DURATION_MAP: iter_run_map,
+                        WorkflowNodeExecutionMetadataKey.TOTAL_TOKENS: self.graph_runtime_state.total_tokens,
+                    },
                 )
+            )
         except IterationNodeError as e:
             yield IterationFailedEvent(
                 start_at=started_at,

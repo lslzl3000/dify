@@ -8,8 +8,8 @@ from core.app.entities.app_invoke_entities import InvokeFrom
 from core.variables.segments import ArrayAnySegment, ArrayStringSegment
 from core.workflow.entities import GraphInitParams, GraphRuntimeState, VariablePool
 from core.workflow.enums import WorkflowNodeExecutionStatus
-from core.workflow.events import NodeRunResult, StreamCompletedEvent
 from core.workflow.graph import Graph
+from core.workflow.node_events import NodeRunResult, StreamCompletedEvent
 from core.workflow.nodes.iteration.entities import ErrorHandleMode
 from core.workflow.nodes.iteration.iteration_node import IterationNode
 from core.workflow.nodes.node_factory import DifyNodeFactory

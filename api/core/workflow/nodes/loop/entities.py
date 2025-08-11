@@ -33,7 +33,7 @@ class LoopVariableData(BaseModel):
     label: str
     var_type: Annotated[SegmentType, AfterValidator(_is_valid_var_type)]
     value_type: Literal["variable", "constant"]
-    value: Optional[Any | list[str]] = None
+    value: Any = None
 
 
 class LoopNodeData(BaseLoopNodeData):
