@@ -451,6 +451,7 @@ class IterationNodeStartStreamResponse(StreamResponse):
         id: str
         node_id: str
         node_type: str
+        title: str
         created_at: int
         extras: dict = {}
         metadata: Mapping = {}
@@ -476,6 +477,7 @@ class IterationNodeNextStreamResponse(StreamResponse):
         id: str
         node_id: str
         node_type: str
+        title: str
         index: int
         created_at: int
         pre_iteration_output: Optional[Any] = None
@@ -503,6 +505,7 @@ class IterationNodeCompletedStreamResponse(StreamResponse):
         id: str
         node_id: str
         node_type: str
+        title: str
         outputs: Optional[Mapping] = None
         created_at: int
         extras: Optional[dict] = None

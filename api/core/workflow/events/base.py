@@ -30,6 +30,7 @@ class GraphNodeEventBase(GraphEngineEvent):
 
 
 class BaseIterationEvent(GraphNodeEventBase):
+    node_title: str
     parallel_mode_run_id: Optional[str] = None
     """iteratoin run in parallel mode run id"""
 

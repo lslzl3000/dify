@@ -76,14 +76,7 @@ class QueueIterationStartEvent(AppQueueEvent):
     node_execution_id: str
     node_id: str
     node_type: NodeType
-    parallel_id: Optional[str] = None
-    """parallel id if node is in parallel"""
-    parallel_start_node_id: Optional[str] = None
-    """parallel start node id if node is in parallel"""
-    parent_parallel_id: Optional[str] = None
-    """parent parallel id if node is in parallel"""
-    parent_parallel_start_node_id: Optional[str] = None
-    """parent parallel start node id if node is in parallel"""
+    node_title: str
     start_at: datetime
 
     node_run_index: int
@@ -103,6 +96,7 @@ class QueueIterationNextEvent(AppQueueEvent):
     node_execution_id: str
     node_id: str
     node_type: NodeType
+    node_title: str
     parallel_id: Optional[str] = None
     """parallel id if node is in parallel"""
     parallel_start_node_id: Optional[str] = None
@@ -128,14 +122,7 @@ class QueueIterationCompletedEvent(AppQueueEvent):
     node_execution_id: str
     node_id: str
     node_type: NodeType
-    parallel_id: Optional[str] = None
-    """parallel id if node is in parallel"""
-    parallel_start_node_id: Optional[str] = None
-    """parallel start node id if node is in parallel"""
-    parent_parallel_id: Optional[str] = None
-    """parent parallel id if node is in parallel"""
-    parent_parallel_start_node_id: Optional[str] = None
-    """parent parallel start node id if node is in parallel"""
+    node_title: str
     start_at: datetime
 
     node_run_index: int

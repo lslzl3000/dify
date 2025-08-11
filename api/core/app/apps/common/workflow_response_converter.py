@@ -286,12 +286,11 @@ class WorkflowResponseConverter:
                 id=event.node_id,
                 node_id=event.node_id,
                 node_type=event.node_type.value,
+                title=event.node_title,
                 created_at=int(time.time()),
                 extras={},
                 inputs=event.inputs or {},
                 metadata=event.metadata or {},
-                parallel_id=event.parallel_id,
-                parallel_start_node_id=event.parallel_start_node_id,
             ),
         )
 
@@ -309,6 +308,7 @@ class WorkflowResponseConverter:
                 id=event.node_id,
                 node_id=event.node_id,
                 node_type=event.node_type.value,
+                title=event.node_title,
                 index=event.index,
                 pre_iteration_output=event.output,
                 created_at=int(time.time()),
@@ -335,6 +335,7 @@ class WorkflowResponseConverter:
                 id=event.node_id,
                 node_id=event.node_id,
                 node_type=event.node_type.value,
+                title=event.node_title,
                 outputs=json_converter.to_json_encodable(event.outputs),
                 created_at=int(time.time()),
                 extras={},
@@ -348,8 +349,6 @@ class WorkflowResponseConverter:
                 execution_metadata=event.metadata,
                 finished_at=int(time.time()),
                 steps=event.steps,
-                parallel_id=event.parallel_id,
-                parallel_start_node_id=event.parallel_start_node_id,
             ),
         )
 
