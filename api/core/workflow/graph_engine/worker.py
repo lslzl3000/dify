@@ -59,18 +59,16 @@ class Worker(threading.Thread):
         and pushes events to event_queue until stopped.
         """
         while not self._stop_event.is_set():
+            # Try to get a node ID from the ready queue (with timeout)
             try:
-                # Try to get a node ID from the ready queue (with timeout)
-                try:
-                    node_id = self.ready_queue.get(timeout=0.1)
-                except queue.Empty:
-                    continue
+                node_id = self.ready_queue.get(timeout=0.1)
+            except queue.Empty:
+                continue
 
-                node = self.graph.nodes[node_id]
+            node = self.graph.nodes[node_id]
+            try:
                 self._execute_node(node)
-
                 self.ready_queue.task_done()
-
             except Exception as e:
                 # Handle unexpected errors
                 try:

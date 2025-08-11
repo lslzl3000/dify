@@ -13,7 +13,7 @@ from threading import RLock
 from typing import Optional, TypeAlias
 from uuid import uuid4
 
-from core.workflow.enums import NodeExecutionType, NodeState, NodeType
+from core.workflow.enums import NodeExecutionType, NodeState
 from core.workflow.events import NodeRunStreamChunkEvent, NodeRunSucceededEvent
 from core.workflow.graph import Graph, Node
 from core.workflow.nodes.answer.answer_node import AnswerNode
@@ -305,23 +305,20 @@ class ResponseStreamCoordinator:
                 return self.try_flush()
         return []
 
-    def _get_node_type(self, node_id: str):
-        return self.graph.nodes[node_id].node_type
-
     def _create_stream_chunk_event(
         self,
         node_id: str,
-        node_type: NodeType,
         execution_id: str,
         selector: Sequence[str],
         chunk: str,
         is_final: bool = False,
     ) -> NodeRunStreamChunkEvent:
         """Create a stream chunk event with consistent structure."""
+        node = self.graph.nodes[node_id]
         return NodeRunStreamChunkEvent(
             id=execution_id,
-            node_id=node_id,
-            node_type=node_type,
+            node_id=node.id,
+            node_type=node.node_type,
             selector=selector,
             chunk=chunk,
             is_final=is_final,
@@ -340,7 +337,6 @@ class ResponseStreamCoordinator:
         if self.registry.has_unread(segment.selector):
             # Stream all available chunks
             source_exec_id = self._get_or_create_execution_id(source_node_id)
-            source_node_type = self._get_node_type(source_node_id)
 
             # Check if this is the last chunk by looking ahead
             stream_closed = self.registry.stream_closed(segment.selector)
@@ -358,12 +354,10 @@ class ResponseStreamCoordinator:
         elif value := self.registry.get_scalar(segment.selector):
             # Process scalar value
             source_exec_id = self._get_or_create_execution_id(source_node_id)
-            source_node_type = self._get_node_type(source_node_id)
 
             events.append(
                 self._create_stream_chunk_event(
                     node_id=source_node_id,
-                    node_type=source_node_type,
                     execution_id=source_exec_id,
                     selector=segment.selector,
                     chunk=value.text,
@@ -381,10 +375,8 @@ class ResponseStreamCoordinator:
 
         # Use get_or_create_execution_id to ensure we have a consistent ID
         execution_id = self._get_or_create_execution_id(current_response_node.id)
-
         event = self._create_stream_chunk_event(
             node_id=current_response_node.id,
-            node_type=current_response_node.node_type,
             execution_id=execution_id,
             selector=[current_response_node.id, "answer"],  # FIXME(-LAN-)
             chunk=segment.text,

@@ -141,7 +141,7 @@ class Node:
                 error_type="WorkflowNodeError",
             )
             yield NodeRunFailedEvent(
-                id=self._node_execution_id,  # Use same node execution id
+                id=self._node_execution_id,
                 node_id=self._node_id,
                 node_type=self.node_type,
                 start_at=self._start_at,
